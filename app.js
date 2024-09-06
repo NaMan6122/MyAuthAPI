@@ -16,7 +16,8 @@ app.use(express.urlencoded({
     extended: true,
 }));
 
-//handling major routing, and diecting the request to the respective route handler.
-
+//handling major routing, and directing the request to the respective route handler.
+import userRouter from "./routes/user.route.js";
+app.use("/api/v1/users", userRouter);
 
 export { app };
