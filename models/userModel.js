@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+import bcryptjs from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 const userModel  = new mongoose.Schema({
     username: {
@@ -28,8 +30,14 @@ const userModel  = new mongoose.Schema({
         type: Date,
         default: Date.now(),
     },
+    isVerified: {
+        type: Boolean,
+        default: false,
+    },
 
     refreshToken: String,
+    resetPasswordToken: String,
+    resetPasswordTokenExpiry: Date,
     forgotPasswordToken: String,
     forgotPasswordTokenExpiry: Date,
     verificationToken: String,
@@ -72,6 +80,8 @@ User.methods.generateRefreshToken = async function(){ //long lived token, used t
         expiresIn: process.env.REFRESH_TOKEN_EXPIRY,
     });
     return token;
-}
+};
+
+
 
 export const User = mongoose.model("User", userModel);
